@@ -29,6 +29,9 @@
 ; and must not modify the state of the carry flag.
 ; -------------------------------------------------------------------
 .import get_crunched_byte
+
+;MALX: import the location of the decrunch table
+.import decrunch_table
 ; -------------------------------------------------------------------
 ; this function is the heart of the decruncher.
 ; It initializes the decruncher zeropage locations and precalculates the
@@ -45,6 +48,7 @@
 ; -------------------------------------------------------------------
 ; zero page addresses used
 ; -------------------------------------------------------------------
+
 zp_len_lo = $a7
 
 zp_src_lo  = $ae
@@ -91,7 +95,7 @@ nextone:
 	inx
 	tya
 	and #$0f
-	beq shortcut		; starta på ny sekvens
+	beq shortcut		; starta pï¿½ ny sekvens
 
 	txa			; this clears reg a
 	lsr a			; and sets the carry flag
@@ -306,17 +310,18 @@ tabl_off:
 ; this 156 byte table area may be relocated. It may also be clobbered
 ; by other data between decrunches.
 ; -------------------------------------------------------------------
-decrunch_table:
-	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-	.byte 0,0,0,0,0,0,0,0,0,0,0,0
+; MALX: Commented this out.
+;decrunch_table:
+;	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+;	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+;	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+;	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+;	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+;	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+;	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+;	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+;	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+;	.byte 0,0,0,0,0,0,0,0,0,0,0,0
 ; -------------------------------------------------------------------
 ; end of decruncher
 ; -------------------------------------------------------------------
