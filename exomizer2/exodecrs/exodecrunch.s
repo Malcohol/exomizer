@@ -23,12 +23,18 @@
 ;   used to endorse or promote products derived from this software without
 ;   specific prior written permission.
 ;
+
+;NOTE: This file has been modified for Fickle. Such modifications are marked
+;with "MALX"
+
 ; -------------------------------------------------------------------
 ; The decruncher jsr:s to the get_crunched_byte address when it wants to
 ; read a crunched byte. This subroutine has to preserve x and y register
 ; and must not modify the state of the carry flag.
 ; -------------------------------------------------------------------
-.import get_crunched_byte
+;MALX: Using include rather than link library
+;.import get_crunched_byte
+;.import decrunch_table
 ; -------------------------------------------------------------------
 ; this function is the heart of the decruncher.
 ; It initializes the decruncher zeropage locations and precalculates the
@@ -36,7 +42,8 @@
 ; This function will not change the interrupt status bit and it will not
 ; modify the memory configuration.
 ; -------------------------------------------------------------------
-.export decrunch
+;MALX: Using include rather than linked library
+;.export decrunch
 
 ; -------------------------------------------------------------------
 ; if literal sequences is not used (the data was crunched with the -c
@@ -306,17 +313,18 @@ tabl_off:
 ; this 156 byte table area may be relocated. It may also be clobbered
 ; by other data between decrunches.
 ; -------------------------------------------------------------------
-decrunch_table:
-	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-	.byte 0,0,0,0,0,0,0,0,0,0,0,0
+; MALX: Commented this out.
+;decrunch_table:
+;	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+;	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+;	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+;	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+;	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+;	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+;	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+;	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+;	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+;	.byte 0,0,0,0,0,0,0,0,0,0,0,0
 ; -------------------------------------------------------------------
 ; end of decruncher
 ; -------------------------------------------------------------------
